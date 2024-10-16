@@ -13,7 +13,10 @@ const Header: React.FC = () => {
 
   return (
     <header className="header">
-      <img className="logo" src={logoIcon} alt="Página Inicial" />
+      <div className="logo-container">
+        <img className="logo" src={logoIcon} alt="Página Inicial" />
+        <span className="petunique-name">PetUnique</span>
+      </div>
       <NavMenu />
       <button className="login-button" onClick={openLogin}>
         <img src={loginIcon} alt="Login" className="login-icon" />
