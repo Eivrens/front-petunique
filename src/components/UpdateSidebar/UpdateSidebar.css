@@ -1,0 +1,28 @@
+.update-sidebar {
+    width: 25%;
+    margin: 10px 10px;
+    height: calc(100vh - 100px);
+    overflow-y: auto;
+    gap: 10px;
+    padding: 10px;
+    border-radius: 8px;
+    background-color: #f9f9f9;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  }
+  
+  .update-sidebar::-webkit-scrollbar {
+    width: 8px;
+  }
+  
+  .update-sidebar::-webkit-scrollbar-thumb {
+    background-color: #ccc;
+    border-radius: 4px;
+  }
+  
+  .update-sidebar::-webkit-scrollbar-thumb:hover {
+    background-color: #bbb;
+  }
+  
+  .update-sidebar::-webkit-scrollbar-track {
+    background: transparent;
+  }

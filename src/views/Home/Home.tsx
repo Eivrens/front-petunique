@@ -1,12 +1,12 @@
 import './Home.css'
 import React from 'react';
-import HighlightSlide from '../../components/HighlightSlide/HighlightSlide';
+import UpdateSidebar from '../../components/UpdateSidebar/UpdateSidebar';
 
 const Home: React.FC = () => {
 
     return (
         <div className="home">
-            <HighlightSlide />
+            <UpdateSidebar/>
         </div>
     )
 }
