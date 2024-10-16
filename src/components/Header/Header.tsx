@@ -1,34 +1,24 @@
-import React, {useState} from "react";
-import { Link } from "react-router-dom";
 import "./Header.css";
-import Login from "./fragments/Login/Login";
+import React, { useState } from "react";
+import LoginModal from "./fragments/LoginModal/LoginModal";
 import loginIcon from "../../assets/icons/icon-login.png";
-import logoIcon from "../../assets/icons/logo.png"
+import logoIcon from "../../assets/icons/logo.png";
+import NavMenu from "./fragments/NavMenu/NavMenu";
 
 const Header: React.FC = () => {
-  const [showLogin, setShowLogin] = useState(false);
+  const [isLoginOpen, setLoginOpen] = useState(false);
 
-  const openLogin = () => setShowLogin(true);
-  const closeLogin = () => setShowLogin(false);
+  const openLogin = () => setLoginOpen(true);
+  const closeLogin = () => setLoginOpen(false);
 
   return (
     <header className="header">
       <img className="logo" src={logoIcon} alt="Página Inicial" />
-      <nav>
-        <Link to="/" className="nav-header">
-          Página Inicial
-        </Link>
-        <Link to="/dashboard" className="nav-header">
-          Campanhas
-        </Link>
-        <Link to="/profile" className="nav-header">
-          Adote
-        </Link>
-      </nav>
+      <NavMenu />
       <button className="login-button" onClick={openLogin}>
         <img src={loginIcon} alt="Login" className="login-icon" />
       </button>
-      <Login isOpen={showLogin} onClose={closeLogin} />
+      <LoginModal isOpen={isLoginOpen} isClosed={closeLogin} />
     </header>
   );
 };

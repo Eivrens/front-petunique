@@ -1,15 +1,16 @@
 .header {
   background-color: var(--primary-color);
   width: auto;
-  height: 70px;
+  height: 80px;
   border: none;
-  border-radius: 5px;
+  padding: 1%;
+  border-radius: 0 0 7px 7px;
   overflow: hidden;
   display: flex;
   justify-content: space-between;
-  margin: 0;
   align-items: center;
-  border-bottom: 4px solid #FDDF19;
+  border-bottom: 8px solid #FDDF19;
+  flex-direction: row;
 }
 
 .logo {
@@ -24,20 +25,10 @@
   transform: scale(1.1);
 }
 
-.nav-header {
-  color: white;
-  margin-right: 1rem;
-  text-decoration: none;
-}
-
-.nav-header:hover {
-  color: #FDDF19;
-}
-
 .login-button {
   background-color: #044FA1;
   border: 1rem;
-  padding: 1rem 1.5rem;
+  padding-right: 2rem;
 }
 
 .login-icon:hover {
