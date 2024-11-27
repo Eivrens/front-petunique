@@ -2,6 +2,7 @@ import "./SignupModal.css";
 import React, { useState } from "react";
 import Modal from "../../../Modal/Modal";
 import logoIcon from "../../../../assets/icons/logo.png";
+import api from "../../../../services/api";
 
 interface SignupModalProps {
   isOpen: boolean;
@@ -9,25 +10,69 @@ interface SignupModalProps {
 }
 
 const SignupModal: React.FC<SignupModalProps> = ({ isOpen, isClosed }) => {
-  const [name, setName] = useState("");
+  const [fullName, setFullName] = useState("");
   const [cpfCnpj, setCpfCnpj] = useState("");
   const [dtBirth, setDtBirth] = useState("");
-  const [address, setAddress] = useState("");
+  const [gender, setGender] = useState("");
+  const [street, setStreet] = useState("");
   const [number, setNumber] = useState("");
   const [complement, setComplement] = useState("");
   const [district, setDistrict] = useState("");
   const [zip, setZip] = useState("");
   const [city, setCity] = useState("");
-  const [uf, setUf] = useState("");
+  const [state, setState] = useState("");
+  const [phone, setPhone] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     if (password !== confirmPassword) {
       alert("As senhas não são iguais. Digite novamente.");
       return;
+    }
+
+    const userData = {
+      fullName,
+      cpfCnpj: cpfCnpj.replace(/[^\d]/g, ""),
+      dtBirth,
+      gender,
+      address: {
+        street,
+        number: parseInt(number, 10),
+        complement,
+        district,
+        city,
+        state,
+        zip: zip.replace("-", ""),
+      },
+      phone,
+      email,
+      password,
+    };
+
+    try {
+      console.log(userData); //DEBUG
+      console.log(JSON.stringify(userData, null, 2)); // DEBUG
+      const response = await api.post("/tutors/register", userData, {
+        headers: {
+          'Content-Type': 'application/json',
+        }
+      });
+
+      alert("Cadastro realizado com sucesso!");
+
+      console.log(response.data); // Log para depuração
+      isClosed();
+    } catch (error: any) {
+      console.error("Erro ao cadastrar:", error);
+
+      if (error.response) {
+        alert(`Erro: ${error.response.data.message}`);
+      } else {
+        alert("Erro inesperado. Tente novamente mais tarde.");
+      }
     }
   };
 
@@ -56,8 +101,8 @@ const SignupModal: React.FC<SignupModalProps> = ({ isOpen, isClosed }) => {
           <label>Nome Completo:</label>
           <input
             type="text"
-            value={name}
-            onChange={(e) => setName(e.target.value)}
+            value={fullName}
+            onChange={(e) => setFullName(e.target.value)}
             required
           />
 
@@ -77,14 +122,21 @@ const SignupModal: React.FC<SignupModalProps> = ({ isOpen, isClosed }) => {
             required
           />
 
+          <label>Sexo:</label>
+          <select value={gender} onChange={(e) => setGender(e.target.value)} required>
+            <option value="">Selecione o sexo</option>
+            <option value="M">Masculino</option>
+            <option value="F">Feminino</option>
+          </select>
+
           <hr />
-        
+
           <h3>Endereço:</h3>
           <label>Rua:</label>
           <input
             type="text"
-            value={address}
-            onChange={(e) => setAddress(e.target.value)}
+            value={street}
+            onChange={(e) => setStreet(e.target.value)}
             required
           />
 
@@ -123,7 +175,11 @@ const SignupModal: React.FC<SignupModalProps> = ({ isOpen, isClosed }) => {
           />
 
           <label>UF:</label>
-          <select value={uf} onChange={(e) => setUf(e.target.value)} required>
+          <select
+            value={state}
+            onChange={(e) => setState(e.target.value)}
+            required
+          >
             <option value="">Selecione o estado</option>
             {[
               "AC - Acre",
@@ -161,6 +217,15 @@ const SignupModal: React.FC<SignupModalProps> = ({ isOpen, isClosed }) => {
           </select>
 
           <hr />
+
+          <label>Telefone:</label>
+          <input
+            type="text"
+            value={phone}
+            onChange={(e) => setPhone(e.target.value)}
+            placeholder="(XX) XXXXX-XXXX"
+            required
+          />
 
           <label>Email:</label>
           <input
